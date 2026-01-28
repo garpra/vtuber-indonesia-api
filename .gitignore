@@ -1,0 +1,23 @@
+# Dependencies
+/node_modules
+
+# Environment
+.env
+.env.local
+
+# Database
+/data
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+logs
+*.log
+
+# OS files
+.DS_Store        # macOS
+Thumbs.db        # Windows
+
+# Coverage
+/coverage
