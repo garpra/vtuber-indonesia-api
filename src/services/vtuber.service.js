@@ -50,6 +50,17 @@ function getAll({ search, agency, platform, status, page = 1, limit = 10 }) {
   };
 }
 
+function getById(id) {
+  const data = db.prepare("SELECT * FROM vtubers WHERE id = ?").get(id);
+
+  if (!data) {
+    return null;
+  }
+
+  return parseTags(data);
+}
+
 module.exports = {
   getAll,
+  getById,
 };
