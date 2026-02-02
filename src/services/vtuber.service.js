@@ -60,7 +60,30 @@ function getById(id) {
   return parseTags(data);
 }
 
+function create(payload) {
+  let data = payload;
+  if (payload.tags) {
+    data = {
+      ...payload,
+      tags: JSON.stringify(payload.tags),
+    };
+  }
+
+  const keys = Object.keys(data); // ['name', 'agency', 'status']
+  const values = Object.values(data); // ['Moona', 'Hololive', 'active']
+
+  const column = keys.join(", "); // Result: name, agency, platform
+  const placeholder = keys.map(() => "?").join(", "); // Result: ?, ?, ?
+
+  const query = `INSERT INTO vtubers (${column}) VALUES (${placeholder})`;
+  const result = db.prepare(query).run(...values);
+  const newId = result.lastInsertRowid;
+
+  return getById(newId);
+}
+
 module.exports = {
   getAll,
   getById,
+  create,
 };
