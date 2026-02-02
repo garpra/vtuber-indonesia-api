@@ -117,10 +117,35 @@ function update(id, payload) {
   return getById(id);
 }
 
+function patch(id, payload) {
+  const checkData = getById(id);
+
+  if (!checkData) return null;
+
+  let data = payload;
+  if (payload.tags) {
+    data = {
+      ...payload,
+      tags: JSON.stringify(payload.tags),
+    };
+  }
+
+  const keys = Object.keys(data); // ['name', 'agency', 'status']
+  const values = Object.values(data); // ['Moona', 'Hololive', 'active']
+
+  const setClause = keys.map((key) => `${key} = ?`).join(", "); // Result: name = ?
+
+  const query = `UPDATE vtubers SET ${setClause} WHERE id = ?`;
+  db.prepare(query).run(...values, id);
+
+  return getById(id);
+}
+
 module.exports = {
   getAll,
   getById,
   create,
   remove,
   update,
+  patch,
 };
