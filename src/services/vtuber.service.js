@@ -82,8 +82,20 @@ function create(payload) {
   return getById(newId);
 }
 
+function remove(id) {
+  const checkData = getById(id);
+
+  if (!checkData) {
+    return null;
+  }
+
+  db.prepare("DELETE FROM vtubers WHERE id = ?").run(id);
+  return checkData;
+}
+
 module.exports = {
   getAll,
   getById,
   create,
+  remove,
 };
