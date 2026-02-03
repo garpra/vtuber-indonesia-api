@@ -27,7 +27,18 @@ function createVtuber(req, res) {
   return res.status(201).json(successResponse(data, "Vtuber created"));
 }
 
+function updateVtuber(req, res) {
+  const id = parseInt(req.params.id);
+  const payload = req.body;
+  const data = service.update(id, payload);
+
+  if (!data) return res.status(404).json(errorResponse("Vtuber not found"));
+
+  return res.status(200).json(successResponse(data, "Vtuber updated"));
+}
+
 module.exports = {
   getAllVtuber,
   createVtuber,
+  updateVtuber,
 };
