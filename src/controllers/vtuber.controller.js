@@ -18,6 +18,16 @@ function getAllVtuber(req, res) {
   return res.status(200).json(successResponse(data, "Vtuber found!"));
 }
 
+function createVtuber(req, res) {
+  const payload = req.body;
+  const data = service.create(payload);
+
+  if (!data) return res.status(400).json(errorResponse("Failed to add Vtuber"));
+
+  return res.status(201).json(successResponse(data, "Vtuber created"));
+}
+
 module.exports = {
   getAllVtuber,
+  createVtuber,
 };
