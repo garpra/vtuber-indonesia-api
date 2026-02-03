@@ -47,9 +47,20 @@ function patchVtuber(req, res) {
   return res.status(200).json(successResponse(data, "Vtuber updated"));
 }
 
+function removeVtuber(req, res) {
+  const id = parseInt(req.params.id);
+  const data = service.remove(id);
+
+  if (!data)
+    return res.status(404).json(errorResponse("Failed to delete Vtuber"));
+
+  return res.status(200).json(successResponse(data, "Vtuber deleted"));
+}
+
 module.exports = {
   getAllVtuber,
   createVtuber,
   updateVtuber,
   patchVtuber,
+  removeVtuber,
 };
