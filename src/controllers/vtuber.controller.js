@@ -18,6 +18,15 @@ function getAllVtuber(req, res) {
   return res.status(200).json(successResponse(data, "Vtuber found!"));
 }
 
+function getVtuberById(req, res) {
+  const id = parseInt(req.params.id);
+  const data = service.getById(id);
+
+  if (!data) return res.status(404).json(errorResponse("Vtuber not found"));
+
+  return res.status(200).json(successResponse(data, "Vtuber found"));
+}
+
 function createVtuber(req, res) {
   const payload = req.body;
   const data = service.create(payload);
@@ -59,6 +68,7 @@ function removeVtuber(req, res) {
 
 module.exports = {
   getAllVtuber,
+  getVtuberById,
   createVtuber,
   updateVtuber,
   patchVtuber,
